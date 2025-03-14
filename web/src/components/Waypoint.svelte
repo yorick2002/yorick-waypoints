@@ -1,6 +1,7 @@
 <script lang="ts">
     import {
         FileCopySolid,
+        InfoCircleSolid,
         MapPinAltSolid,
         TrashBinSolid,
     } from "flowbite-svelte-icons";
@@ -11,17 +12,21 @@
 
     // Delete function
     const deleteRecord = (id: number) => {
-        console.log("Deleting record with ID:", id);
-
         app.dataArray = app.dataArray.filter(
             (item: { waypointId: number }) => item.waypointId !== id,
         );
         localStorage.setItem("WAYPOINT_DATA", JSON.stringify(app.dataArray));
     };
+
+    const showDesc = () => {
+        console.log("hovered over description");
+    };
 </script>
 
 <div>
-    <div class="border-1 border-[#374152] bg-[#1e2939] p-7 rounded-lg relative">
+    <div
+        class="border-1 border-[#374152] bg-[#1e2939] p-10 rounded-lg relative"
+    >
         <!-- Vertical line -->
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
 
@@ -44,7 +49,13 @@
             <Tooltip text="Delete">
                 <TrashBinSolid
                     class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    onclick={()=> deleteRecord(waypointId)}
+                    onclick={() => deleteRecord(waypointId)}
+                />
+            </Tooltip>
+
+            <Tooltip text="Description from waypoint hawk tuah 123">
+                <InfoCircleSolid
+                    class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
                 />
             </Tooltip>
         </div>
