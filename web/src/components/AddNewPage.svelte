@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { Button, Label, Input, Textarea } from "flowbite-svelte";
-    import { CheckOutline } from "flowbite-svelte-icons";
+    import { Button, Label, Input, Textarea, Toast } from "flowbite-svelte";
+    import { CheckOutline, FireOutline } from "flowbite-svelte-icons";
 
     let { app } = $props();
 
@@ -10,7 +10,26 @@
     let waypointCoordsZ = $state("");
     let waypointDescription = $state("");
 
+    // Add a state variable to track validation errors
+    let validationError = $state("");
+
     const saveToLocalStorage = () => {
+        // Reset validation error
+        validationError = "";
+
+        // Check if any required field is empty
+        if (
+            !waypointName.trim() ||
+            !waypointCoordsX.trim() ||
+            !waypointCoordsY.trim() ||
+            !waypointCoordsZ.trim() ||
+            !waypointDescription.trim()
+        ) {
+            validationError = "Fill in all fields!";
+            return;
+        }
+
+        // Proceed with saving data if validation passes
         const existingData = JSON.parse(
             localStorage.getItem("WAYPOINT_DATA") ?? "[]",
         );
@@ -37,6 +56,7 @@
         existingData.push(waypointData);
         localStorage.setItem("WAYPOINT_DATA", JSON.stringify(existingData));
 
+        // Navigate back to the main page
         app.showAddNewPage = false;
         app.showMainPage = true;
     };
@@ -116,7 +136,8 @@
 
     <Label for="message" class="block mb-2">Description (optional)</Label>
     <Textarea
-        class="h-[8rem]"
+        class="h-[8rem] resize-none"
+        
         bind:value={waypointDescription}
         {...app.textareaprops}
     />
