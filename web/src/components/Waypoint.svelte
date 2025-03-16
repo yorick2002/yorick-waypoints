@@ -18,44 +18,51 @@
         localStorage.setItem("WAYPOINT_DATA", JSON.stringify(app.dataArray));
     };
 
-    const showDesc = () => {
-        console.log("hovered over description");
+    // Function to get description based on waypointId
+    const getDescription = (id: number): string | undefined => {
+        const waypoint = app.dataArray.find(
+            (item: { waypointId: number }) => item.waypointId === id,
+        );
+        return waypoint?.description;
     };
+
+    const description = getDescription(waypointId);
+
 </script>
 
 <div>
     <div
-        class="border-1 border-[#374152] bg-[#1e2939] p-10 rounded-lg relative"
+        class="border-1 border-[#374152] bg-[#1e2939] p-8 rounded-lg relative"
     >
         <!-- Vertical line -->
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
 
         <!-- Icons container -->
         <div
-            class="absolute right-1 top-0.5 gap-2 h-full items-center pr-2 flex flex-col justify-center"
+            class="absolute right-1 top-0.5 gap-1.5 h-full items-center pr-2 flex flex-col justify-center"
         >
             <Tooltip text="Teleport">
                 <MapPinAltSolid
-                    class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
                 />
             </Tooltip>
 
             <Tooltip text="Copy coords">
                 <FileCopySolid
-                    class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
                 />
             </Tooltip>
 
             <Tooltip text="Delete">
                 <TrashBinSolid
-                    class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
                     onclick={() => deleteRecord(waypointId)}
                 />
             </Tooltip>
 
-            <Tooltip text="Description from waypoint hawk tuah 123">
+            <Tooltip text={description}>
                 <InfoCircleSolid
-                    class="size-6 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
                 />
             </Tooltip>
         </div>

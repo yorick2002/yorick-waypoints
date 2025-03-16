@@ -3,16 +3,39 @@
     import Waypoint from "./Waypoint.svelte";
 
     // Flowbite components
-    import { Button, ButtonGroup, InputAddon, Input } from "flowbite-svelte";
+    import { Button, Input } from "flowbite-svelte";
     import { SearchOutline } from "flowbite-svelte-icons";
 
     let { app } = $props();
 
+    // Retrieve data from localStorage
     let storedWaypointData = localStorage.getItem("WAYPOINT_DATA");
 
     if (storedWaypointData) {
         app.dataArray = JSON.parse(storedWaypointData);
     }
+
+    // Reactive search input
+    let searchValue = $state("");
+
+    // Reactive filtered data
+    let filteredData = $state(app.dataArray);
+
+    // Effect to filter data whenever searchValue or app.dataArray changes
+    $effect(() => {
+        console.log(`You are currently typing: ${searchValue}`);
+
+        // Filter the data based on searchValue
+        if (searchValue === "") {
+            // If searchValue is empty, show all data
+            filteredData = app.dataArray;
+        } else {
+            // Otherwise, filter the data
+            filteredData = app.dataArray.filter((waypointItem: { name: string; }) => {
+                return waypointItem.name.toLowerCase().includes(searchValue.toLowerCase());
+            });
+        }
+    });
 </script>
 
 <div class="flex flex-col p-10 w-full gap-2">
@@ -30,18 +53,13 @@
     </div>
     <hr class="border-t-2=1 border-[#a1a1a7] my-4" />
     <div class="flex gap-x-2">
-        <ButtonGroup class="w-full">
-            <InputAddon>
-                <SearchOutline class="text-gray-500 dark:text-gray-400" />
-            </InputAddon>
-            <Input id="input" placeholder="Search waypoints..." />
-        </ButtonGroup>
+        <Input type="text" bind:value={searchValue} placeholder="Search..." class="w-[55rem]" />
     </div>
     <br />
 
     <div class="grid grid-cols-2 gap-5 w-full overflow-auto no-scrollbar">
-        {#if app.dataArray.length > 0}
-            {#each app.dataArray as waypointItem}
+        {#if filteredData.length > 0}
+            {#each filteredData as waypointItem}
                 <Waypoint
                     {app}
                     waypointId={waypointItem.waypointId}
