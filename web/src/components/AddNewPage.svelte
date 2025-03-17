@@ -15,12 +15,10 @@
     let waypointDescription = $state("");
 
     const saveToLocalStorage = () => {
-        // Proceed with saving data if validation passes
         const existingData = JSON.parse(
             localStorage.getItem("WAYPOINT_DATA") ?? "[]",
         );
 
-        // Find the highest existing waypointId and increment it
         let waypointId =
             existingData.length > 0
                 ? Math.max(

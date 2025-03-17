@@ -11,7 +11,6 @@ RegisterCommand("waypoints", function(source, args)
     SetNuiFocus(ui, ui)
 end, false)
 
-
 RegisterNUICallback('setVisible', function(data, cb)
     SetNuiFocus(data.visible, data.visible)
     cb({ status = 'ok' })
