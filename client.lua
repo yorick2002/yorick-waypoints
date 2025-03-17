@@ -1,10 +1,5 @@
 local ui = false
 
-RegisterNUICallback('setVisible', function(data, cb)
-    SetNuiFocus(data.visible, data.visible)
-    cb({ status = 'ok' })
-end)
-
 RegisterCommand("waypoints", function(source, args)
     ui = not ui
     SendNUIMessage({
@@ -15,6 +10,12 @@ RegisterCommand("waypoints", function(source, args)
     })
     SetNuiFocus(ui, ui)
 end, false)
+
+
+RegisterNUICallback('setVisible', function(data, cb)
+    SetNuiFocus(data.visible, data.visible)
+    cb({ status = 'ok' })
+end)
 
 RegisterNuiCallback("coords", function(data, cb)
     local player = PlayerPedId()
