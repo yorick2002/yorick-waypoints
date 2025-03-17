@@ -11,7 +11,6 @@ export async function nuiFetch<T = any>(
 
   // If we're in development or resource name is not available, mock the response
   if (!resourceName || import.meta.env.DEV) {
-    console.log(`Mocking NUI event: ${eventName}`, data);
     return { status: "ok", data: data as T };
   }
 

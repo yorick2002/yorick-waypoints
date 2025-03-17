@@ -4,7 +4,11 @@
 
     // Flowbite components
     import { Button, Input } from "flowbite-svelte";
-    import { SearchOutline } from "flowbite-svelte-icons";
+    import {
+        CirclePlusSolid,
+        MapPinAltSolid,
+        SearchOutline,
+    } from "flowbite-svelte-icons";
 
     let { app } = $props();
 
@@ -23,37 +27,62 @@
 
     // Effect to filter data whenever searchValue or app.dataArray changes
     $effect(() => {
-        console.log(`You are currently typing: ${searchValue}`);
-
         // Filter the data based on searchValue
         if (searchValue === "") {
             // If searchValue is empty, show all data
             filteredData = app.dataArray;
         } else {
             // Otherwise, filter the data
-            filteredData = app.dataArray.filter((waypointItem: { name: string; }) => {
-                return waypointItem.name.toLowerCase().includes(searchValue.toLowerCase());
-            });
+            filteredData = app.dataArray.filter(
+                (waypointItem: { name: string }) => {
+                    return waypointItem.name
+                        .toLowerCase()
+                        .includes(searchValue.toLowerCase());
+                },
+            );
         }
     });
 </script>
 
-<div class="flex flex-col p-10 w-full gap-2">
-    <div>
+<div class="flex flex-col p-10 w-full">
+    <div class="flex gap-5">
         <h1 class="text-white font-semibold text-2xl">Waypoint manager</h1>
-        <h1 class="text-[#a1a1a7]">Save and manage your waypoints</h1>
+
+        <div class="flex flex-row gap-x-3 ml-auto mt-1">
+            <Button
+                on:click={app.mainPageButton}
+                class="w-[8rem] bg-[#202937] cursor-pointer"
+                id="MainPageButton"
+            >
+                Waypoints
+                <MapPinAltSolid class="w-5 h-5 ms-2" />
+            </Button>
+            <Button
+                on:click={app.addNewButton}
+                class="w-[8rem] bg-[#202937] cursor-pointer"
+                id="AddNewButton"
+            >
+                Add new
+                <CirclePlusSolid class="w-5 h-5 ms-2" />
+            </Button>
+        </div>
     </div>
-    <div class="flex flex-row gap-x-3 mt-1">
-        <Button on:click={app.mainPageButton} class="w-[8rem]" color="light">
-            Waypoints
-        </Button>
-        <Button on:click={app.addNewButton} class="w-[8rem]" color="light">
-            Add new
-        </Button>
-    </div>
+
+    <h1 class="text-[#a1a1a7]">Save and manage your waypoints</h1>
+
     <hr class="border-t-2=1 border-[#a1a1a7] my-4" />
     <div class="flex gap-x-2">
-        <Input type="text" bind:value={searchValue} placeholder="Search..." class="w-[55rem]" />
+        <Input
+            type="text"
+            bind:value={searchValue}
+            placeholder="Search..."
+            class="w-[55rem] !bg-[#384151] !border-[#4a5564] !placeholder-[#99a1ae]"
+        >
+            <SearchOutline
+                slot="left"
+                color="#858d99"
+            />
+        </Input>
     </div>
     <br />
 

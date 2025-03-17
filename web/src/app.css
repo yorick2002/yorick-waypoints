@@ -11,4 +11,18 @@
         -ms-overflow-style: none;  /* IE and Edge */
         scrollbar-width: none;  /* Firefox */
   }
+
+  .waypointsPageIndicator {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+
+  .addNewPageIndicator {
+    padding: 10px 20px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease; 
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  }
 }

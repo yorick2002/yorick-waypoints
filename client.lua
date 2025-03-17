@@ -1,18 +1,19 @@
 local ui = false
 
-function SendSvelteMessage(action, data)
-    SendNUIMessage({ action = action, data = data })
-end
+RegisterNUICallback('setVisible', function(data, cb)
+    SetNuiFocus(data.visible, data.visible)
+    cb({ status = 'ok' })
+end)
 
-RegisterCommand("waypoints", function()
+RegisterCommand("waypoints", function(source, args)
     ui = not ui
-    if ui then
-        SendSvelteMessage("openMenu", { ShowUI = true })
-        SetNuiFocus(true, true)
-    else
-        SendSvelteMessage("openMenu", { ShowUI = false })
-        SetNuiFocus(false, false)
-    end
+    SendNUIMessage({
+        type = "setVisible",
+        data = {
+            visible = ui
+        }
+    })
+    SetNuiFocus(ui, ui)
 end, false)
 
 RegisterNuiCallback("coords", function(data, cb)
@@ -34,6 +35,7 @@ end)
 
 RegisterNUICallback("teleportPlayer", function(data, cb)
     local player = PlayerPedId()
-    SetEntityCoords(player, data.coordX, data.coordY, data.coordZ -1.0, false, true, false, false)
+    SetEntityCoords(player, tonumber(data.coordX), tonumber(data.coordY), tonumber(data.coordZ) - 1.0, false, true, false,
+        false)
     cb()
 end)
