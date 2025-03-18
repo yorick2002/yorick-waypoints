@@ -33,9 +33,10 @@
     app.showAddNewPage = true;
   }
 
-  $effect(() => { // hehe we fade in, very meh!
+  $effect(() => {
     if ($visibility) {
       app.shouldDisplay = true;
+      nuiFetch("openMenu")
       setTimeout(() => app.opacity = 1, 0);
     } else {
       app.opacity = 0;

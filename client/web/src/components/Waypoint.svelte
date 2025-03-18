@@ -43,11 +43,10 @@
         const waypoint = app.dataArray.find(
             (item: any) => item.waypointId === id,
         );
-
-        // Safely access X, Y, Z properties (they might not exist or be of unknown type)
-        const x = waypoint?.X?.toString(); // Convert to string if it exists
-        const y = waypoint?.Y?.toString(); // Convert to string if it exists
-        const z = waypoint?.Z?.toString(); // Convert to string if it exists
+        
+        const x = waypoint?.X?.toString(); 
+        const y = waypoint?.Y?.toString(); 
+        const z = waypoint?.Z?.toString(); 
 
         console.log(x);
         console.log(y);
@@ -71,7 +70,9 @@
 
 <div>
     <div class="border-1 border-[#374152] bg-[#1e2939] p-8 rounded-lg relative">
+        
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
+        
         <div
             class="absolute right-1 top-0.5 gap-1.5 h-full items-center pr-2 flex flex-col justify-center"
         >

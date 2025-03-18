@@ -35,7 +35,15 @@ end)
 
 RegisterNUICallback("teleportPlayer", function(data, cb)
     local player = PlayerPedId()
+---@diagnostic disable-next-line: param-type-mismatch
     SetEntityCoords(player, tonumber(data.coordX), tonumber(data.coordY), tonumber(data.coordZ) - 1.0, false, true, false,
         false)
+    cb(0)
+end)
+
+RegisterNUICallback("openMenu", function(data, cb)
+    print("Received")
     cb()
 end)
+
+

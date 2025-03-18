@@ -12,27 +12,19 @@
 
     let { app } = $props();
 
-    // Retrieve data from localStorage
     let storedWaypointData = localStorage.getItem("WAYPOINT_DATA");
 
     if (storedWaypointData) {
         app.dataArray = JSON.parse(storedWaypointData);
     }
 
-    // Reactive search input
     let searchValue = $state("");
-
-    // Reactive filtered data
     let filteredData = $state(app.dataArray);
 
-    // Effect to filter data whenever searchValue or app.dataArray changes
     $effect(() => {
-        // Filter the data based on searchValue
         if (searchValue === "") {
-            // If searchValue is empty, show all data
             filteredData = app.dataArray;
         } else {
-            // Otherwise, filter the data
             filteredData = app.dataArray.filter(
                 (waypointItem: { name: string }) => {
                     return waypointItem.name
@@ -78,10 +70,7 @@
             placeholder="Search..."
             class="w-[55rem] !bg-[#384151] !border-[#4a5564] !placeholder-[#99a1ae]"
         >
-            <SearchOutline
-                slot="left"
-                color="#858d99"
-            />
+            <SearchOutline slot="left" color="#858d99" />
         </Input>
     </div>
     <br />

@@ -6,14 +6,20 @@ author 'Yorick'
 description 'FiveM waypoints script'
 version '1.0.0'
 
-ui_page 'web/build/index.html'
-
+ui_page 'client/web/build/index.html'
+--ui_page 'http://localhost:5173'
 
 client_scripts {
-    'client.lua',
+    'client/client.lua',
+}
+
+server_script {
+    '@oxmysql/lib/MySQL.lua',
+    'server/server.lua',
+    'server/functions.lua'
 }
 
 files {
-    'web/build/index.html',
-    'web/build/**/*'
+    'client/web/build/index.html',
+    'client/web/build/**/*'
 }
