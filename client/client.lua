@@ -16,6 +16,7 @@ RegisterNUICallback('setVisible', function(data, cb)
     cb({ status = 'ok' })
 end)
 
+-- Callback for teleport to waypoint function
 RegisterNuiCallback("coords", function(data, cb)
     local player = PlayerPedId()
     local plyCoords = GetEntityCoords(player)
@@ -35,15 +36,19 @@ end)
 
 RegisterNUICallback("teleportPlayer", function(data, cb)
     local player = PlayerPedId()
----@diagnostic disable-next-line: param-type-mismatch
+    ---@diagnostic disable-next-line: param-type-mismatch
     SetEntityCoords(player, tonumber(data.coordX), tonumber(data.coordY), tonumber(data.coordZ) - 1.0, false, true, false,
         false)
     cb(0)
 end)
 
+-- Later for the cool blip stuff
 RegisterNUICallback("openMenu", function(data, cb)
     print("Received")
     cb()
 end)
 
-
+RegisterNUICallback("createNew", function(data, cb)
+    TriggerServerEvent("yorick-waypoints:createNew", data)
+    cb(data)
+end)

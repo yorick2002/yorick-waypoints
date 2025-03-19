@@ -15,20 +15,13 @@
 
     // Delete function
     const deleteRecord = (id: number) => {
-        app.dataArray = app.dataArray.filter(
-            (item: { waypointId: number }) => item.waypointId !== id,
-        );
-        localStorage.setItem("WAYPOINT_DATA", JSON.stringify(app.dataArray));
+    
     };
 
-    const getDescription = (id: number): string | undefined => {
-        const waypoint = app.dataArray.find(
-            (item: { waypointId: number }) => item.waypointId === id,
-        );
-        return waypoint?.description;
+    const getDescription = () => {
+        
     };
-    const description = getDescription(waypointId);
-
+    
     const copyItem = async (textToCopy: string) => {
         const textArea = document.createElement("textarea");
         textArea.value = textToCopy;
@@ -38,33 +31,8 @@
         document.body.removeChild(textArea);
     };
 
-    const teleportPlayer = async (id: number) => {
-        // Find the waypoint by ID
-        const waypoint = app.dataArray.find(
-            (item: any) => item.waypointId === id,
-        );
+    const teleportPlayer = async () => {
         
-        const x = waypoint?.X?.toString(); 
-        const y = waypoint?.Y?.toString(); 
-        const z = waypoint?.Z?.toString(); 
-
-        console.log(x);
-        console.log(y);
-        console.log(z);
-
-        fetch(`https://yorick-waypoints/teleportPlayer`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json; charset=UTF-8",
-            },
-            body: JSON.stringify({
-                coordX: x,
-                coordY: y,
-                coordZ: z,
-            }),
-        });
-        nuiFetch("closeMenu")
-        setVisible(false);
     };
 </script>
 
@@ -80,7 +48,7 @@
                 <MapPinAltSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    onclick={() => teleportPlayer(waypointId)}
+                    onclick={() => teleportPlayer()}
                 />
             </Tooltip>
 
@@ -88,11 +56,11 @@
                 <FileCopySolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    onclick={() => copyItem(waypointCoords)}
+                    
                 />
             </Tooltip>
 
-            <Tooltip text={description}>
+            <Tooltip text="h">
                 <InfoCircleSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"

@@ -1,9 +1,9 @@
 <script lang="ts">
-
     import Header from "./Header.svelte";
 
     import { Button, Label, Input, Textarea, Toast } from "flowbite-svelte";
     import { CheckOutline } from "flowbite-svelte-icons";
+    import { nuiFetch } from "../lib/nuiFetch";
 
     let { app } = $props();
 
@@ -13,35 +13,16 @@
     let waypointCoordsZ = $state("");
     let waypointDescription = $state("");
 
-    const saveToLocalStorage = () => {
-        const existingData = JSON.parse(
-            localStorage.getItem("WAYPOINT_DATA") ?? "[]",
-        );
-
-        let waypointId =
-            existingData.length > 0
-                ? Math.max(
-                      ...existingData.map(
-                          (w: { waypointId: number }) => w.waypointId,
-                      ),
-                  ) + 1
-                : 1;
-
-        const waypointData = {
-            waypointId,
-            name: waypointName,
-            X: waypointCoordsX,
-            Y: waypointCoordsY,
-            Z: waypointCoordsZ,
-            description: waypointDescription,
+    const saveToDb = () => {
+        const data = {
+            waypointName,
+            waypointCoordsX,
+            waypointCoordsY,
+            waypointCoordsZ,
+            waypointDescription,
         };
 
-        existingData.push(waypointData);
-        localStorage.setItem("WAYPOINT_DATA", JSON.stringify(existingData));
-
-        // Navigate back to the main page
-        app.showAddNewPage = false;
-        app.showMainPage = true;
+        nuiFetch("createNew", data);
     };
 
     const getCurrentPlayerCoords = () => {
@@ -64,8 +45,7 @@
 </script>
 
 <div class="flex flex-col p-10 w-full">
-    
-    <Header {app}/>
+    <Header {app} />
 
     <hr class="border-t-2=1 !border-[#a1a1a7] my-4" />
 
@@ -142,10 +122,7 @@
     />
 
     <div class="mt-6">
-        <Button
-            on:click={saveToLocalStorage}
-            class="w-full !bg-[#202937] cursor-pointer"
-        >
+        <Button on:click={saveToDb} class="w-full !bg-[#202937] cursor-pointer">
             <CheckOutline class="w-5 h-5 me-2" /> Save waypoint
         </Button>
     </div>

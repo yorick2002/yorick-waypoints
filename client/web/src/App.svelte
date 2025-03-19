@@ -17,9 +17,7 @@
       placeholder: "Enter description...",
       rows: 4,
       id: "textarea",
-    },
-
-    dataArray: JSON.parse(localStorage.getItem("WAYPOINT_DATA") || "[]"),
+    }
   });
 
   // Functions to toggle pages

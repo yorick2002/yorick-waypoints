@@ -11,29 +11,7 @@
     } from "flowbite-svelte-icons";
 
     let { app } = $props();
-
-    let storedWaypointData = localStorage.getItem("WAYPOINT_DATA");
-
-    if (storedWaypointData) {
-        app.dataArray = JSON.parse(storedWaypointData);
-    }
-
-    let searchValue = $state("");
-    let filteredData = $state(app.dataArray);
-
-    $effect(() => {
-        if (searchValue === "") {
-            filteredData = app.dataArray;
-        } else {
-            filteredData = app.dataArray.filter(
-                (waypointItem: { name: string }) => {
-                    return waypointItem.name
-                        .toLowerCase()
-                        .includes(searchValue.toLowerCase());
-                },
-            );
-        }
-    });
+    
 </script>
 
 <div class="flex flex-col p-10 w-full">
@@ -66,7 +44,7 @@
     <div class="flex gap-x-2">
         <Input
             type="text"
-            bind:value={searchValue}
+            
             placeholder="Search..."
             class="w-[55rem] !bg-[#384151] !border-[#4a5564] !placeholder-[#99a1ae]"
         >
@@ -76,7 +54,7 @@
     <br />
 
     <div class="grid grid-cols-2 gap-5 w-full overflow-auto no-scrollbar">
-        {#if filteredData.length > 0}
+        <!-- {#if filteredData.length > 0}
             {#each filteredData as waypointItem}
                 <Waypoint
                     {app}
@@ -92,6 +70,6 @@
                     <p class="text-[#a1a1a7]">Add your first waypoint</p>
                 </div>
             </div>
-        {/if}
+        {/if} -->
     </div>
 </div>
