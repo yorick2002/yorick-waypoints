@@ -15,7 +15,8 @@ client_scripts {
 
 server_script {
     '@oxmysql/lib/MySQL.lua',
-    'server/server.lua',
+    'server/CreateNew.lua',
+    'server/GetWaypoints.lua',
     'server/database.lua'
 }
 

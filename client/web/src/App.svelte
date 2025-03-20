@@ -34,7 +34,7 @@
   $effect(() => {
     if ($visibility) {
       app.shouldDisplay = true;
-      nuiFetch("openMenu")
+      nuiFetch("getWaypoints")
       setTimeout(() => app.opacity = 1, 0);
     } else {
       app.opacity = 0;

@@ -1,5 +1,4 @@
-RegisterNetEvent("yorick-waypoints:createNew")
-AddEventHandler("yorick-waypoints:createNew", function(data)
+RegisterNetEvent("yorick-waypoints:sv_createNew", function(data)
     local playerName = GetPlayerName(source)
     local playerLicense2 = {}
 

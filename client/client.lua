@@ -42,13 +42,19 @@ RegisterNUICallback("teleportPlayer", function(data, cb)
     cb(0)
 end)
 
--- Later for the cool blip stuff
-RegisterNUICallback("openMenu", function(data, cb)
-    print("Received")
-    cb()
+RegisterNUICallback("createNew", function(data, cb)
+    TriggerServerEvent("yorick-waypoints:sv_createNew", data)
+    cb(data)
 end)
 
-RegisterNUICallback("createNew", function(data, cb)
-    TriggerServerEvent("yorick-waypoints:createNew", data)
-    cb(data)
+-- Later for the cool blip stuff
+RegisterNUICallback("getWaypoints", function(data, cb)
+    TriggerServerEvent("yorick-waypoints:sv_getWaypoints")
+
+    RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
+    AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
+        print(row.name)
+    end)
+
+    cb()
 end)
