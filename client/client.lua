@@ -47,14 +47,22 @@ RegisterNUICallback("createNew", function(data, cb)
     cb(data)
 end)
 
--- Later for the cool blip stuff
 RegisterNUICallback("getWaypoints", function(data, cb)
     TriggerServerEvent("yorick-waypoints:sv_getWaypoints")
+    cb({ status = 'ok' })
+end)
 
-    RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
-    AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
-        print(row.name)
-    end)
-
-    cb()
+RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
+AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
+    row = json.decode(row)
+    SendNUIMessage({
+        type = "getWaypoints",
+        data = {
+            waypointName = row.name,
+            x = row.x,
+            y = row.y,
+            z = row.z,
+            waypointDescription = row.description
+        }
+    })
 end)

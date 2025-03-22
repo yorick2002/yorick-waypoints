@@ -7,21 +7,20 @@
     } from "flowbite-svelte-icons";
 
     import { visibility, setVisible } from "../lib/nuiVisibility";
+    import { onNuiMessage } from "../lib/nuiListen";
 
     import Tooltip from "../components/Tooltip.svelte";
     import { nuiFetch } from "../lib/nuiFetch";
 
-    let { app, waypointId, waypointName, waypointCoords } = $props();
+    let { app, waypointName, waypointCoords } = $props();
+
+    // ------------------------------------------------------------------------------------------------------------
 
     // Delete function
-    const deleteRecord = (id: number) => {
-    
-    };
+    const deleteRecord = (id: number) => {};
 
-    const getDescription = () => {
-        
-    };
-    
+    const getDescription = () => {};
+
     const copyItem = async (textToCopy: string) => {
         const textArea = document.createElement("textarea");
         textArea.value = textToCopy;
@@ -31,16 +30,13 @@
         document.body.removeChild(textArea);
     };
 
-    const teleportPlayer = async () => {
-        
-    };
+    const teleportPlayer = async () => {};
 </script>
 
 <div>
     <div class="border-1 border-[#374152] bg-[#1e2939] p-8 rounded-lg relative">
-        
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
-        
+
         <div
             class="absolute right-1 top-0.5 gap-1.5 h-full items-center pr-2 flex flex-col justify-center"
         >
@@ -56,7 +52,6 @@
                 <FileCopySolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    
                 />
             </Tooltip>
 
@@ -71,7 +66,7 @@
                 <TrashBinSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    onclick={() => deleteRecord(waypointId)}
+                    
                 />
             </Tooltip>
         </div>

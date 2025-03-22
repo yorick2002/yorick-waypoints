@@ -17,7 +17,7 @@
       placeholder: "Enter description...",
       rows: 4,
       id: "textarea",
-    }
+    },
   });
 
   // Functions to toggle pages
@@ -33,14 +33,14 @@
 
   $effect(() => {
     if ($visibility) {
-      app.shouldDisplay = true;
-      nuiFetch("getWaypoints")
-      setTimeout(() => app.opacity = 1, 0);
+        app.shouldDisplay = true;
+        nuiFetch("getWaypoints");
+        setTimeout(() => (app.opacity = 1), 0);
     } else {
-      app.opacity = 0;
-      setTimeout(() => app.shouldDisplay = false, 200);
+        app.opacity = 0;
+        setTimeout(() => (app.shouldDisplay = false), 200);
     }
-  });
+});
 
   $effect(() => {
     const mainPageButton = document.querySelector("#MainPageButton");
@@ -55,7 +55,7 @@
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape" && $visibility) {
-      nuiFetch("closeMenu")
+      nuiFetch("closeMenu");
       setVisible(false);
     }
   };
