@@ -25,9 +25,9 @@
         });
     };
 
-    onMount(() => {
+    $effect(() => {
         getWaypoints();
-    });
+    })
 </script>
 
 <div class="flex flex-col p-10 w-full">
