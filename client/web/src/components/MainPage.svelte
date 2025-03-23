@@ -9,22 +9,24 @@
         MapPinAltSolid,
         SearchOutline,
     } from "flowbite-svelte-icons";
+
     import { onNuiMessage } from "../lib/nuiListen";
+    import { onMount } from "svelte";
 
     let { app } = $props();
 
-    app.waypoints = [];
-    onNuiMessage("getWaypoints", (data: any) => {
-        app.waypoints = [
-            ...app.waypoints,
-            {
-                name: data.waypointName,
-                x: data.x,
-                y: data.y,
-                z: data.z,
-                description: data.waypointDescription,
-            },
-        ];
+    // svelte-ignore non_reactive_update
+    let wayPoints: any
+
+    const getWaypoints = () => {
+        onNuiMessage("getWaypoints", (data: any) => {
+            wayPoints = data
+            console.log(wayPoints);
+        });
+    };
+
+    onMount(() => {
+        getWaypoints();
     });
 </script>
 
@@ -68,11 +70,11 @@
     <br />
 
     <div class="grid grid-cols-2 gap-5 w-full overflow-auto no-scrollbar">
-        {#if app.waypoints && app.waypoints.length > 0}
-            {#each app.waypoints as waypoint}
+        {#if wayPoints && wayPoints.length > 0}
+            {#each wayPoints as waypoint}
                 <Waypoint
                     {app}
-                    waypointName={waypoint.name}
+                    waypointName={waypoint.waypointName}
                     waypointCoords={`X:${waypoint.x} Y:${waypoint.y} Z:${waypoint.z}`}
                 />
             {/each}

@@ -1,8 +1,17 @@
 {
     "Lua.diagnostics.globals": [
         "MySQL",
+        "files",
+        "server_script",
+        "client_scripts",
+        "ui_page"
     ],
     "Lua.diagnostics.disable": [
-        "param-type-mismatch"
-    ]
+        "param-type-mismatch",
+        "undefined-global"
+    ],
+    "Lua.workspace.library": [
+        "D:/Development/Utils/ox_types/types",
+    ],
 }
+
