@@ -1,5 +1,5 @@
 <script lang="ts">
-  let { text = 'Tooltip text' } = $props(); // Default tooltip text
+  let {text} = $props(); // Default tooltip text
   
   let isVisible = $state(false)
 

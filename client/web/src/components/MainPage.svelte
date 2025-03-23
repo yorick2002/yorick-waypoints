@@ -11,23 +11,16 @@
     } from "flowbite-svelte-icons";
 
     import { onNuiMessage } from "../lib/nuiListen";
-    import { onMount } from "svelte";
 
     let { app } = $props();
 
-    // svelte-ignore non_reactive_update
-    let wayPoints: any
-
-    const getWaypoints = () => {
-        onNuiMessage("getWaypoints", (data: any) => {
-            wayPoints = data
-            console.log(wayPoints);
+    onNuiMessage("getWaypoints", (data: any) => {
+        const jsonObject = data;
+        const array = Object.values(jsonObject);
+        array.forEach((value) => {
+            console.log(value);
         });
-    };
-
-    $effect(() => {
-        getWaypoints();
-    })
+    });
 </script>
 
 <div class="flex flex-col p-10 w-full">
@@ -70,16 +63,15 @@
     <br />
 
     <div class="grid grid-cols-2 gap-5 w-full overflow-auto no-scrollbar">
-        {#if wayPoints && wayPoints.length > 0}
-            {#each wayPoints as waypoint}
+        {#if app.waypoints && app.waypoints.length > 0}
+            {#each app.waypoints as waypoint}
                 <Waypoint
                     {app}
-                    waypointName={waypoint.waypointName}
+                    waypointName={waypoint.name}
                     waypointCoords={`X:${waypoint.x} Y:${waypoint.y} Z:${waypoint.z}`}
                 />
             {/each}
         {:else}
-            <!-- Fallback UI if no waypoints exist -->
             <div class="flex col-span-2 justify-center items-center h-full">
                 <div class="text-center">
                     <h1 class="text-white font-semibold">No waypoints found</h1>

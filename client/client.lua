@@ -55,6 +55,7 @@ end)
 RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
 AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
     row = json.decode(row)
+    print(row)
     SendNUIMessage({
         type = "getWaypoints",
         data = {
@@ -62,7 +63,8 @@ AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
             x = row.x,
             y = row.y,
             z = row.z,
-            waypointDescription = row.description
+            waypointDescription = row.description,
+            waypointId = row.id
         }
     })
 end)

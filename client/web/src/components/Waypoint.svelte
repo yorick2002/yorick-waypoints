@@ -16,21 +16,22 @@
 
     // ------------------------------------------------------------------------------------------------------------
 
-    // Delete function
-    const deleteRecord = (id: number) => {};
+    // let waypoints: any[] = [];
 
-    const getDescription = () => {};
+    // // Listen for the "getWaypoints" event and store the data
+    // onNuiMessage("getWaypoints", (data: any) => {
+    //     waypoints.push(data);
+    // });
 
-    const copyItem = async (textToCopy: string) => {
-        const textArea = document.createElement("textarea");
-        textArea.value = textToCopy;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand("copy");
-        document.body.removeChild(textArea);
-    };
+    // // Function to get the description of a waypoint by its ID
+    // const getDescription = (waypointId: number): string | undefined => {
+    //     const waypoint = waypoints.find((wp) => wp.waypointId === waypointId);
+    //     return waypoint ? waypoint.waypointDescription : undefined;
+    // };
+    // const waypointDescription = getDescription(2)
+    // console.log(waypointDescription);
+    
 
-    const teleportPlayer = async () => {};
 </script>
 
 <div>
@@ -44,7 +45,6 @@
                 <MapPinAltSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    onclick={() => teleportPlayer()}
                 />
             </Tooltip>
 
@@ -55,7 +55,7 @@
                 />
             </Tooltip>
 
-            <Tooltip text="h">
+            <Tooltip text="hi">
                 <InfoCircleSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
@@ -66,7 +66,6 @@
                 <TrashBinSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
-                    
                 />
             </Tooltip>
         </div>
