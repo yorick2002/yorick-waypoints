@@ -14,24 +14,10 @@
 
     let { app, waypointName, waypointCoords } = $props();
 
-    // ------------------------------------------------------------------------------------------------------------
 
-    // let waypoints: any[] = [];
-
-    // // Listen for the "getWaypoints" event and store the data
-    // onNuiMessage("getWaypoints", (data: any) => {
-    //     waypoints.push(data);
-    // });
-
-    // // Function to get the description of a waypoint by its ID
-    // const getDescription = (waypointId: number): string | undefined => {
-    //     const waypoint = waypoints.find((wp) => wp.waypointId === waypointId);
-    //     return waypoint ? waypoint.waypointDescription : undefined;
-    // };
-    // const waypointDescription = getDescription(2)
-    // console.log(waypointDescription);
+    // Get the description for the current waypoint
+    // Replace `2` with the actual waypointId for the current waypoint
     
-
 </script>
 
 <div>
@@ -55,7 +41,8 @@
                 />
             </Tooltip>
 
-            <Tooltip text="hi">
+            <!-- Tooltip with the waypoint description -->
+            <Tooltip text="No description available">
                 <InfoCircleSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"

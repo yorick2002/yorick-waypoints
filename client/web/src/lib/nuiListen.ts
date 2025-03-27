@@ -3,20 +3,27 @@ interface NuiMessage<T = unknown> {
   data: T;
 }
 
+const registeredListeners = new Map<string, (event: MessageEvent<NuiMessage<any>>) => void>();
+
 export function onNuiMessage<T = unknown>(
   type: string,
   callback: (data: T) => void
 ): () => void {
-  const listener = (event: MessageEvent<NuiMessage<T>>) => {
-    const { type: messageType, data } = event.data;
+  if (registeredListeners.has(type)) {
+    window.removeEventListener("message", registeredListeners.get(type)!);
+  }
 
-    if (messageType === type) {
-      callback(data);
+  const listener = (event: MessageEvent<NuiMessage<T>>) => {
+    if (event.data.type === type) {
+      callback(event.data.data);
     }
   };
 
   window.addEventListener("message", listener);
+  registeredListeners.set(type, listener);
 
-  // Return cleanup function
-  return () => window.removeEventListener("message", listener);
+  return () => {
+    window.removeEventListener("message", listener);
+    registeredListeners.delete(type);
+  };
 }

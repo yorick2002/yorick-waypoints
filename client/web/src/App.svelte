@@ -33,14 +33,13 @@
 
   $effect(() => {
     if ($visibility) {
-        app.shouldDisplay = true;
-        nuiFetch("getWaypoints");
-        setTimeout(() => (app.opacity = 1), 0);
+      app.shouldDisplay = true;
+      setTimeout(() => (app.opacity = 1), 0);
     } else {
-        app.opacity = 0;
-        setTimeout(() => (app.shouldDisplay = false), 200);
+      app.opacity = 0;
+      setTimeout(() => (app.shouldDisplay = false), 200);
     }
-});
+  });
 
   $effect(() => {
     const mainPageButton = document.querySelector("#MainPageButton");
@@ -55,8 +54,8 @@
 
   const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === "Escape" && $visibility) {
-      nuiFetch("closeMenu");
       setVisible(false);
+      nuiFetch("closeMenu");
     }
   };
   window.addEventListener("keydown", handleKeydown);
@@ -64,6 +63,7 @@
   onDestroy(() => {
     window.removeEventListener("keydown", handleKeydown);
   });
+
 </script>
 
 {#if app.shouldDisplay}

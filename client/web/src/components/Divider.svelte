@@ -1,0 +1,1 @@
+<hr class="border-t-2=1 !border-[#a1a1a7] my-4" />

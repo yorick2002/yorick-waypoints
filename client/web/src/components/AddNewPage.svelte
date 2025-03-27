@@ -15,7 +15,7 @@
 
     const saveToDb = () => {
         const data = {
-            waypointName,
+            waypointName, 
             waypointCoordsX,
             waypointCoordsY,
             waypointCoordsZ,
@@ -23,6 +23,8 @@
         };
 
         nuiFetch("createNew", data);
+        app.showAddNewPage = false;
+        app.showMainPage = true;
     };
 
     const getCurrentPlayerCoords = () => {
