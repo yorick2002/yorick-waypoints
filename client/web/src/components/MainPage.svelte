@@ -6,15 +6,14 @@
 
     import { nuiFetch } from "../lib/nuiFetch";
     import { dataArray } from "../stores/store";
-    import { onDestroy, onMount } from "svelte";
+    import { onDestroy } from "svelte";
 
     let { app } = $props();
 
     nuiFetch("getWaypoints");
 
     const handleData = (event: any) => {
-        $dataArray.push(event.data.data);
-        console.log(event.data.data);
+        dataArray.update((items) => [...items, event.data.data]);
     };
 
     window.addEventListener("message", handleData);
