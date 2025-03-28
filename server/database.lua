@@ -16,12 +16,6 @@ function CreateTables()
             FOREIGN KEY (`player_id`) REFERENCES `yorick_players`(`id`) ON DELETE CASCADE
         )]])
     end)
-
-    if not success then
-        print("Error creating tables: " .. err)
-    else
-        print("Tables created or already exist.")
-    end
 end
 
 CreateThread(CreateTables)

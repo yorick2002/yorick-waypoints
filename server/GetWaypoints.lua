@@ -13,7 +13,6 @@ RegisterNetEvent("yorick-waypoints:sv_getWaypoints", function(data)
     if result then
         for i = 1, #result do
             row = json.encode(result[i])
-            print(row)
             TriggerClientEvent("yorick-waypoints:cl_getWaypoints", src, row)
         end
     end

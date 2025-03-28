@@ -5,19 +5,29 @@
         MapPinAltSolid,
         TrashBinSolid,
     } from "flowbite-svelte-icons";
-
-    import { visibility, setVisible } from "../lib/nuiVisibility";
-    import { onNuiMessage } from "../lib/nuiListen";
-
     import Tooltip from "../components/Tooltip.svelte";
     import { nuiFetch } from "../lib/nuiFetch";
 
-    let { app, waypointName, waypointCoords } = $props();
+    import { dataArray } from "../stores/store";
 
+    let { app, waypointName, waypointCoords, waypointDescription, waypointId } =
+        $props();
 
-    // Get the description for the current waypoint
-    // Replace `2` with the actual waypointId for the current waypoint
-    
+    const deleteRecord = (id: number) => {
+        dataArray.update(
+            (items) => items.filter((item) => item.waypointId !== id), // Remove the item with the matching id
+        );
+
+        fetch("https://yorick-waypoints/deleteWaypoint", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({
+                itemId: id,
+            }),
+        })
+    };
 </script>
 
 <div>
@@ -41,8 +51,7 @@
                 />
             </Tooltip>
 
-            <!-- Tooltip with the waypoint description -->
-            <Tooltip text="No description available">
+            <Tooltip text={waypointDescription}>
                 <InfoCircleSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
@@ -50,9 +59,11 @@
             </Tooltip>
 
             <Tooltip text="Delete">
+                <!-- Updated to use on:click and passing waypointId -->
                 <TrashBinSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    onclick={() => deleteRecord(waypointId)}
                 />
             </Tooltip>
         </div>

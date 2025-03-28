@@ -16,7 +16,6 @@ RegisterNUICallback('setVisible', function(data, cb)
     cb({ status = 'ok' })
 end)
 
--- Callback for teleport to waypoint function
 RegisterNuiCallback("coords", function(data, cb)
     local player = PlayerPedId()
     local plyCoords = GetEntityCoords(player)
@@ -55,7 +54,6 @@ end)
 RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
 AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
     row = json.decode(row)
-    print(json.encode(row)) -- Debug print
     SendNUIMessage({
         type = "getWaypoints",
         data = {
@@ -67,4 +65,10 @@ AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
             waypointId = row.id
         }
     })
+end)
+
+RegisterNUICallback("deleteWaypoint", function(data, cb)
+    print(data)
+    TriggerServerEvent("yorick-waypoints:sv_deleteWaypoint", data)
+    cb({ status = 'ok' })
 end)

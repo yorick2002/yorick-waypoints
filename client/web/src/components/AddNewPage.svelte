@@ -23,8 +23,6 @@
         };
 
         nuiFetch("createNew", data);
-        app.showAddNewPage = false;
-        app.showMainPage = true;
     };
 
     const getCurrentPlayerCoords = () => {

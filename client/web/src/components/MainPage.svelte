@@ -37,6 +37,8 @@
                     {app}
                     waypointName={`Name: ${item.waypointName}`}
                     waypointCoords={`X:${item.x} Y:${item.y} Z:${item.z}`}
+                    waypointDescription = {item.waypointDescription}
+                    waypointId = {item.waypointId}
                 />
             {/each}
         {:else}
