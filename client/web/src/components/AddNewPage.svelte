@@ -15,13 +15,12 @@
 
     const saveToDb = () => {
         const data = {
-            waypointName, 
+            waypointName,
             waypointCoordsX,
             waypointCoordsY,
             waypointCoordsZ,
             waypointDescription,
         };
-
         nuiFetch("createNew", data);
     };
 

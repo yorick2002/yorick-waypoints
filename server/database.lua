@@ -13,6 +13,7 @@ function CreateTables()
             `z` DOUBLE,
             `description` TEXT,
             `name` VARCHAR(255),
+            `favourite` TINYINT DEFAULT 0,
             FOREIGN KEY (`player_id`) REFERENCES `yorick_players`(`id`) ON DELETE CASCADE
         )]])
     end)

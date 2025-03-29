@@ -6,6 +6,7 @@ RegisterNetEvent("yorick-waypoints:sv_getWaypoints", function(data)
         SELECT w.* FROM yorick_waypoints w
         JOIN yorick_players p ON w.player_id = p.id
         WHERE p.license2 = ?
+        ORDER BY w.favourite DESC;
     ]], { playerLicense2 })
 
     local row = {}

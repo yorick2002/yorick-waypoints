@@ -4,18 +4,49 @@
         InfoCircleSolid,
         MapPinAltSolid,
         TrashBinSolid,
+        StarOutline,
+        StarSolid,
     } from "flowbite-svelte-icons";
+
     import Tooltip from "../components/Tooltip.svelte";
+
     import { nuiFetch } from "../lib/nuiFetch";
 
     import { dataArray } from "../stores/store";
+    import { setVisible } from "../lib/nuiVisibility";
 
-    let { app, waypointName, waypointCoords, waypointDescription, waypointId } =
-        $props();
+    import { copyText } from "../utils/copyText";
+
+    let {
+        app,
+        waypointName,
+        waypointCoords,
+        waypointDescription,
+        waypointId,
+        favourite,
+    } = $props();
+
+    const teleportPlayer = (id: number) => {
+        const waypoint = $dataArray.find((item: any) => item.waypointId === id);
+
+        fetch(`https://yorick-waypoints/teleportPlayer`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json; charset=UTF-8",
+            },
+            body: JSON.stringify({
+                coordX: waypoint.x,
+                coordY: waypoint.y,
+                coordZ: waypoint.z,
+            }),
+        });
+        nuiFetch("closeMenu");
+        setVisible(false);
+    };
 
     const deleteRecord = (id: number) => {
-        dataArray.update(
-            (items) => items.filter((item) => item.waypointId !== id), // Remove the item with the matching id
+        dataArray.update((items) =>
+            items.filter((item) => item.waypointId !== id),
         );
 
         fetch("https://yorick-waypoints/deleteWaypoint", {
@@ -26,13 +57,46 @@
             body: JSON.stringify({
                 itemId: id,
             }),
-        })
+        });
+    };
+
+    let isFavourite = $state(favourite);
+
+    const toggleFavourite = async () => {
+        isFavourite = !isFavourite;
+
+        await fetch("https://yorick-waypoints/toggleFavourite", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                waypointId: waypointId,
+                favourite: isFavourite ? 1 : 0,
+            }),
+        });
     };
 </script>
 
 <div>
     <div class="border-1 border-[#374152] bg-[#1e2939] p-8 rounded-lg relative">
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
+
+        <div class="absolute right-13 top-2 flex items-center pr-2">
+            {#if isFavourite}
+                <StarSolid
+                    color="#fff54e"
+                    class="size-5.5 text-yellow-400 cursor-pointer transition-colors"
+                    onclick={toggleFavourite}
+                />
+            {:else}
+                <StarOutline
+                    style="color: #99a1ad;"
+                    class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    onclick={toggleFavourite}
+                />
+            {/if}
+        </div>
 
         <div
             class="absolute right-1 top-0.5 gap-1.5 h-full items-center pr-2 flex flex-col justify-center"
@@ -41,6 +105,9 @@
                 <MapPinAltSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    onclick={() => {
+                        teleportPlayer(waypointId);
+                    }}
                 />
             </Tooltip>
 
@@ -48,6 +115,9 @@
                 <FileCopySolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"
+                    onclick={() => {
+                        copyText(waypointCoords);
+                    }}
                 />
             </Tooltip>
 
@@ -59,7 +129,6 @@
             </Tooltip>
 
             <Tooltip text="Delete">
-                <!-- Updated to use on:click and passing waypointId -->
                 <TrashBinSolid
                     color="#99a1ad"
                     class="size-5.5 text-gray-400 hover:text-gray-200 cursor-pointer transition-colors"

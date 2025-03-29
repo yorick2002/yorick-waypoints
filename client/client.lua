@@ -62,13 +62,18 @@ AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
             y = row.y,
             z = row.z,
             waypointDescription = row.description,
-            waypointId = row.id
+            waypointId = row.id,
+            row.favourite,
         }
     })
 end)
 
 RegisterNUICallback("deleteWaypoint", function(data, cb)
-    print(data)
     TriggerServerEvent("yorick-waypoints:sv_deleteWaypoint", data)
+    cb({ status = 'ok' })
+end)
+
+RegisterNUICallback("toggleFavourite", function(data, cb)
+    TriggerServerEvent("yorick-waypoints:sv_toggleFavourite", data)
     cb({ status = 'ok' })
 end)

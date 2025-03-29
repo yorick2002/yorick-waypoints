@@ -39,6 +39,7 @@
                     waypointCoords={`X:${item.x} Y:${item.y} Z:${item.z}`}
                     waypointDescription = {item.waypointDescription}
                     waypointId = {item.waypointId}
+                    favourite={item.favourite}
                 />
             {/each}
         {:else}
