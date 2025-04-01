@@ -3,24 +3,32 @@
     import MainPageInput from "./MainPageInput.svelte";
     import Header from "./Header.svelte";
     import Divider from "./Divider.svelte";
-
+    import { onMount, onDestroy } from "svelte";
     import { nuiFetch } from "../lib/nuiFetch";
     import { dataArray } from "../stores/store";
-    import { onDestroy } from "svelte";
 
     let { app } = $props();
 
-    nuiFetch("getWaypoints");
+    onMount(() => {
+        dataArray.set([]);
+        nuiFetch("getWaypoints");
+    });
 
     const handleData = (event: any) => {
-        dataArray.update((items) => [...items, event.data.data]);
+        if (event.data?.type !== "getWaypoints") return;
+        
+        dataArray.update(items => {
+            const exists = items.some(item => item.waypointId === event.data.data.waypointId);
+            return exists ? items : [...items, event.data.data];
+        });
     };
 
     window.addEventListener("message", handleData);
 
+    // Cleanup
     onDestroy(() => {
         window.removeEventListener("message", handleData);
-        $dataArray = [];
+        dataArray.set([]);
     });
 </script>
 
@@ -31,15 +39,15 @@
     <br />
 
     <div class="grid grid-cols-2 gap-5 w-full overflow-auto no-scrollbar">
-        {#if $dataArray && $dataArray.length > 0}
-            {#each $dataArray as item}
+        {#if $dataArray.length > 0}
+            {#each $dataArray as waypoint (waypoint.waypointId)}
                 <Waypoint
                     {app}
-                    waypointName={`Name: ${item.waypointName}`}
-                    waypointCoords={`X:${item.x} Y:${item.y} Z:${item.z}`}
-                    waypointDescription = {item.waypointDescription}
-                    waypointId = {item.waypointId}
-                    favourite={item.favourite}
+                    waypointId={waypoint.waypointId}
+                    waypointName={waypoint.waypointName}
+                    waypointCoords={`X: ${waypoint.x} Y: ${waypoint.y} Z: ${waypoint.z}`}
+                    waypointDescription={waypoint.waypointDescription}
+                    favourite={waypoint.isFavourite}
                 />
             {/each}
         {:else}

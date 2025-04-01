@@ -7,14 +7,10 @@
         StarOutline,
         StarSolid,
     } from "flowbite-svelte-icons";
-
     import Tooltip from "../components/Tooltip.svelte";
-
     import { nuiFetch } from "../lib/nuiFetch";
-
     import { dataArray } from "../stores/store";
     import { setVisible } from "../lib/nuiVisibility";
-
     import { copyText } from "../utils/copyText";
 
     let {
@@ -23,12 +19,17 @@
         waypointCoords,
         waypointDescription,
         waypointId,
-        favourite,
+        favourite = 0,
     } = $props();
+
+    let isFavourite = $state(favourite === 1);
+
+    $effect(() => {
+        isFavourite = favourite === 1;
+    });
 
     const teleportPlayer = (id: number) => {
         const waypoint = $dataArray.find((item: any) => item.waypointId === id);
-
         fetch(`https://yorick-waypoints/teleportPlayer`, {
             method: "POST",
             headers: {
@@ -48,7 +49,6 @@
         dataArray.update((items) =>
             items.filter((item) => item.waypointId !== id),
         );
-
         fetch("https://yorick-waypoints/deleteWaypoint", {
             method: "POST",
             headers: {
@@ -60,20 +60,11 @@
         });
     };
 
-    let isFavourite = $state(favourite);
-
     const toggleFavourite = async () => {
         isFavourite = !isFavourite;
-
-        await fetch("https://yorick-waypoints/toggleFavourite", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                waypointId: waypointId,
-                favourite: isFavourite ? 1 : 0,
-            }),
+        await nuiFetch("toggleFavourite", {
+            waypointId: waypointId,
+            favourite: isFavourite ? 1 : 0,
         });
     };
 </script>
@@ -82,6 +73,7 @@
     <div class="border-1 border-[#374152] bg-[#1e2939] p-8 rounded-lg relative">
         <div class="absolute right-12 h-full w-px bg-[#374152] top-0"></div>
 
+        <!-- Favourite Star Button -->
         <div class="absolute right-13 top-2 flex items-center pr-2">
             {#if isFavourite}
                 <StarSolid
@@ -97,7 +89,7 @@
                 />
             {/if}
         </div>
-
+        
         <div
             class="absolute right-1 top-0.5 gap-1.5 h-full items-center pr-2 flex flex-col justify-center"
         >
@@ -137,7 +129,6 @@
             </Tooltip>
         </div>
 
-        <div class="flex items-end justify-end"></div>
         <div class="flex justify-between items-center">
             <h1 class="text-lg font-semibold text-white mb-2">
                 {waypointName}

@@ -63,7 +63,7 @@ AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
             z = row.z,
             waypointDescription = row.description,
             waypointId = row.id,
-            row.favourite,
+            isFavourite = row.favourite;
         }
     })
 end)
@@ -77,3 +77,6 @@ RegisterNUICallback("toggleFavourite", function(data, cb)
     TriggerServerEvent("yorick-waypoints:sv_toggleFavourite", data)
     cb({ status = 'ok' })
 end)
+
+
+
