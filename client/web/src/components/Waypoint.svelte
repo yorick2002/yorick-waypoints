@@ -9,7 +9,6 @@
     } from "flowbite-svelte-icons";
     import Tooltip from "../components/Tooltip.svelte";
     import { nuiFetch } from "../lib/nuiFetch";
-    import { dataArray } from "../stores/store";
     import { setVisible } from "../lib/nuiVisibility";
     import { copyText } from "../utils/copyText";
 
@@ -29,7 +28,7 @@
     });
 
     const teleportPlayer = (id: number) => {
-        const waypoint = $dataArray.find((item: any) => item.waypointId === id);
+        const waypoint = app.waypoints.find((item: any) => item.id === id);
         fetch(`https://yorick-waypoints/teleportPlayer`, {
             method: "POST",
             headers: {
@@ -46,8 +45,8 @@
     };
 
     const deleteRecord = (id: number) => {
-        dataArray.update((items) =>
-            items.filter((item) => item.waypointId !== id),
+        app.waypoints = app.waypoints.filter(
+            (item: any) => item.id !== id
         );
         fetch("https://yorick-waypoints/deleteWaypoint", {
             method: "POST",

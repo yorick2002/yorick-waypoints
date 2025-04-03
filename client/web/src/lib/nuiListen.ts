@@ -1,4 +1,4 @@
-interface NuiMessage<T = unknown> {
+export interface NuiMessage<T = unknown> {
   type: string;
   data: T;
 }

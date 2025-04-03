@@ -18,6 +18,7 @@
       rows: 4,
       id: "textarea",
     },
+    waypoints: [],
   });
 
   // Functions to toggle pages
@@ -63,7 +64,6 @@
   onDestroy(() => {
     window.removeEventListener("keydown", handleKeydown);
   });
-
 </script>
 
 {#if app.shouldDisplay}

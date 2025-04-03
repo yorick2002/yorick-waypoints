@@ -13,7 +13,7 @@
     let waypointCoordsZ = $state("");
     let waypointDescription = $state("");
 
-    const saveToDb = () => {
+    const saveToDb = async () => {
         const data = {
             waypointName,
             waypointCoordsX,
@@ -21,9 +21,14 @@
             waypointCoordsZ,
             waypointDescription,
         };
-        nuiFetch("createNew", data);
+        await nuiFetch("createNew", data);
+        app.waypoints.push(data)
+        setTimeout(() => {
+            app.showAddNewPage = false;
+            app.showMainPage = true;
+        }, 50);
+        
     };
-
     const getCurrentPlayerCoords = () => {
         fetch("https://yorick-waypoints/coords", {
             method: "POST",

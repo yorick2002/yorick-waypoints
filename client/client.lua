@@ -52,19 +52,11 @@ RegisterNUICallback("getWaypoints", function(data, cb)
 end)
 
 RegisterNetEvent("yorick-waypoints:cl_getWaypoints")
-AddEventHandler("yorick-waypoints:cl_getWaypoints", function(row)
-    row = json.decode(row)
+AddEventHandler("yorick-waypoints:cl_getWaypoints", function(data)
+    print(json.encode(data))
     SendNUIMessage({
         type = "getWaypoints",
-        data = {
-            waypointName = row.name,
-            x = row.x,
-            y = row.y,
-            z = row.z,
-            waypointDescription = row.description,
-            waypointId = row.id,
-            isFavourite = row.favourite;
-        }
+        data = data
     })
 end)
 
